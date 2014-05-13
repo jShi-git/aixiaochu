@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>爱消除</title>
+    <style>
+    * { margin: 0; padding: 0; }
+    html, body { height: 100%; width: 100%; overflow-y:hidden;}
+    canvas { display: block; margin:0px auto;}
+    body{background: #252833;}
+    .bang{position: absolute; top:40px; left:50%; width: 275px; margin-left: -134px; overflow: hidden; display:none; z-index: 1002;}
+    .bang .ico{background-image: url(image/default/bang.png);background-repeat: no-repeat;}
+    .bang ul{list-style: none; background: rgba(80,116,52,0.6); padding: 5px 5px 0px;}
+    .bang ul > li{display: inline-block; width: 100%; background: rgba(124,166,76,0.6); border-bottom: 1px solid #9ebd85; line-height: 50px; color:#2fc7c2; font-weight: bold; height: 50px; overflow: hidden;}
+    .bang ul > li:hover{background:  rgba(131,189,87,0.6); color:#efefef;}
+    .bang ul > li:last-child{border-bottom:none;}
+    .bang ul > li .ico{text-indent: 999em;}
+    .bang ul > li > img{display: inline-block; margin:0px 0px 0px 50px;vertical-align:middle;}
+    .bang ul > li > div{display: inline-block; width: 40px; height: 40px; text-align: center; position: absolute;vertical-align:middle;}
+    .bang ul > li > span{display: inline-block;vertical-align:middle; margin-left:10px;}
+    .bang ul > li > .num{margin: 12px 0px 0px 5px; width:28px; height:30px;}
+    .bang .bt,.bang .bb{height: 36px; overflow: hidden;}
+    .bang .bt div{height: 36px; display: inline-block; margin:0px; float: left;}
+    .bang .bt .btl{background-position: 0px -65px; width: 20px;}
+    .bang .bt .btc{background-position: 0px -105px; background-repeat:repeat-x;width: 235px; text-align:center; font-size: 16px; line-height:36px; font-weight:bold;color:#fff;}
+    .bang .bt .btr{background-position: -20px -65px; width: 20px;}
+    .bang .bb{height:5px;background: rgba(80,116,52,0.6); border-radius: 0px 0px 5px 5px;}
+    .bang ul > li.horno{height:50px; line-height: 50px;}
+    li div.num1.ico{background-position: 0px -145px; margin-top: 10px;}
+    li div.num2.ico{background-position: -40px -145px; margin-top: 10px;}
+    li div.num3.ico{background-position: -80px -145px; margin-top: 10px;}
+    li div.num4.ico{background-position: -112px 0px;}
+    li div.num5.ico{background-position: 0px -30px;}
+    li div.num6.ico{background-position: -28px -30px;}
+    #model{position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: black; z-index: 1001;opacity: 0.3;display: none;}
+    </style>
+    <script src="js/jquery.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/create.js"></script>
+    <script src="js/tweenMax.js"></script>
+    <script src="js/avatar.js"></script>
+    <script src="js/score.js"></script>
+    <script src="js/ani.js"></script>
+    <script src="js/game.js"></script>
+</head>
+<body>
+    <div class="view">
+        <canvas id="demoCanvas" width="320" height="480">您的浏览器不支持canvas</canvas>
+    </div>
+
+    <!--排行榜-->
+    <div class="bang">
+        <div class="bt">
+            <div class="btl ico"></div>
+            <div class="btc ico">排行榜</div>
+            <div class="btr ico"></div>
+        </div>
+        <ul id="toplist">
+        </ul>
+        <div class="bb"></div>
+    </div>
+
+    <div id="model"></div>
+
+    <script>
+        window.onload = init;
+        
+        function init(){
+            var game;
+            var theme = $.getVar("theme")
+            var themeName = theme ? theme : "default";
+            
+            //开始游戏
+            game = Game.init({"canvasID":"demoCanvas", "theme":themeName});
+        }
+        $("body").delegate("#model", "click", function() {
+            $("#model").fadeOut();
+            $(".bang").animate({"top":-480}, {"callback":function() {
+
+            },"speed":300});
+        });
+    </script>
+</body>
+</html>
