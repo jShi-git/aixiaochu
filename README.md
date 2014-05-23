@@ -1,5 +1,9 @@
 爱消除html5版
-author:http://www.shizuwu.cn/
+=======================
+
+Author:<a href="_blank" href="http://www.shizuwu.cn/">http://www.shizuwu.cn/</a>
+
+Demo:<a href="_blank" href="http://jshi-git.github.io/game/aixiaochu/index.html">http://jshi-git.github.io/game/aixiaochu/index.html</a>
 
 游戏界面模仿微信游戏天天系列中的——天天爱消除
 
