@@ -68,13 +68,20 @@ $(function() {
             var data = {
                 "mod": "start"
             };
-            $.ajaxGet(Util.API_HOST, data, function(respons) {
-                This.playCount = respons.playCount;
-                This.sessKey = respons.sess;
-
+            if(This.debug) {
+                This.playCount = 3;
+                This.sessKey = "";
                 //载入loading
                 This.getAssets(Util.loading[This.theme], "loading");
-            });
+            } else {
+                $.ajaxGet(Util.API_HOST, data, function(respons) {
+                    This.playCount = respons.playCount;
+                    This.sessKey = respons.sess;
+
+                    //载入loading
+                    This.getAssets(Util.loading[This.theme], "loading");
+                });
+            }
         },
 
         createTimer: function(time) {
