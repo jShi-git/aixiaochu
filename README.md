@@ -5,4 +5,12 @@ author:http://www.shizuwu.cn/
 
 界面素材和声音素材来源于网上
 
-<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/axc.gif"/>
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/loading.png"/>
+
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/游戏中.png"/>
+
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/排行榜.png"/>
+
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/个人主页.png"/>
+
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/end.png"/>
