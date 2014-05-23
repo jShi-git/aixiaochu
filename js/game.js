@@ -33,7 +33,12 @@ $(function() {
         dropArr: [],
         check: false,
         loading: null,
-        loadAni:null,
+        loadAni: null,
+        initTime: 10,
+        timeCount: 10,
+        timer: null,
+        playCount:0, //剩余游戏次数
+        sessKey:"",
 
         /**
          * 初始化
@@ -47,16 +52,62 @@ $(function() {
             this.canvas = document.getElementById(this.opts.canvasID);
             this.stage = new createjs.Stage(this.canvas);
 
-            //根据页面尺寸判断画布大小
+            //根据页面尺寸判断画布大小(暂无)
             this.stage.width = this.canvas.width;
             this.stage.height = this.canvas.height;
 
             this.assets = {};
 
-            //载入loading
-            this.getAssets(Util.loading[this.theme], "loading");
+            this.playCounter();
 
             return this;
+        },
+
+        playCounter:function() {
+            var This = this;
+            var data = {
+                "mod": "start"
+            };
+            $.ajaxGet(Util.API_HOST, data, function(respons) {
+                This.playCount = respons.playCount;
+                This.sessKey = respons.sess;
+
+                //载入loading
+                This.getAssets(Util.loading[This.theme], "loading");
+            });
+        },
+
+        createTimer: function(time) {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+            this.timeCount = time;
+
+            var This = this;
+
+            $("#over").hide();
+            $("#timeBar").show();
+            $("#timeBar span").css({
+                "width": "100%"
+            });
+
+            this.timer = setInterval(function() {
+                This.timeCount--;
+                var per = (This.timeCount / This.initTime) * 100;
+                if (per <= 30) {
+                    var color = "#e24a60";
+                    $("#over").show();
+                } else {
+                    var color = "#2187E7";
+                }
+                $("#timeBar span").css({
+                    "width": per + "%"
+                });
+                if (This.timeCount == 0) {
+                    $("#over").hide();
+                    This.timeUP(This);
+                }
+            }, 1000);
         },
 
         /**
@@ -82,10 +133,10 @@ $(function() {
                     "regY": 0,
                     "count": 5
                 },
-                "shadow":true,
+                "shadow": true,
                 "scale": false
             }, (this.stage.width - 55) / 2, (this.stage.height - 50) / 2);
-            
+
             //播放登录页面背景音乐
             createjs.Sound.play("login", createjs.Sound.INTERRUPT_NONE, 0, 0, -1, 1);
 
@@ -106,10 +157,12 @@ $(function() {
             createjs.Ticker.addEventListener("tick", this.stage);
 
             this.getAssets(Util.themes[this.theme]);
+
+            // this.addMask();
         },
 
         /**
-         * 载入动画 
+         * 载入动画
          * @param  {[type]} config  [description]
          * @param  {[type]} offsetX [description]
          * @param  {[type]} offsetY [description]
@@ -139,7 +192,16 @@ $(function() {
          * 开始游戏
          * @return {[type]} [description]
          */
-        startGame: function() {
+        startGame: function(time, type) {
+            //限制次数
+            if(this.playCount <= 0) {
+                if(typeof type == "undefined") {
+                } else {
+                }
+                alert("您剩余的游戏次数为0");
+                return false;
+            }
+
             createjs.Touch.enable(this.stage);
 
             //背景
@@ -151,8 +213,18 @@ $(function() {
             //头像矩阵
             this.creatMatrix();
 
-            //设置时间轴
-            this.setTick();
+            if(typeof type == "undefined") {
+                
+                //设置时间轴
+                this.setTick();
+            }
+
+            //设置计时器
+            this.createTimer(time);
+        },
+
+        clearStage: function() {
+            console.log(this.stage);
         },
 
         /**
@@ -174,7 +246,7 @@ $(function() {
          * @return {[type]}          [description]
          */
         getAssets: function(manifest, type) {
-            
+
             var que = new createjs.LoadQueue(true);
 
             this.assets = {};
@@ -212,8 +284,12 @@ $(function() {
             this.loading.alpha = 0;
             //this.loadAni = null;
             this.stage.removeChild(this.loadAni);
-            this.addImg(this.assets['start']);
-
+            if(this.playCount > 0) {
+                this.addImg(this.assets['start']);
+            } else {
+                this.addImg(this.assets['qzone']);
+            }
+            this.addImg(this.assets['myhome']);
         },
 
         /**
@@ -247,29 +323,71 @@ $(function() {
                 gamebg.scaleY = this.stage.height / result.height;
             }
 
-            if(img.item.id == 'top') {
+            if (img.item.id == 'top') {
                 gamebg.x = this.stage.width - result.width - 20;
                 gamebg.y = 15;
 
-                gamebg.buttonMode = true;
+                gamebg.cursor = "pointer";
                 gamebg.on("click", function() {
                     Score.getTop();
                 })
             }
 
             if (img.item.id == "start") {
-                gamebg.x = (this.stage.width - result.width) / 2;
+                gamebg.x = (this.stage.width - result.width) / 2 - 70;
                 gamebg.y = this.stage.height - 80;
 
-                gamebg.buttonMode = true;
+                gamebg.scaleX = gamebg.scaleY = 0.9;
+
+                gamebg.cursor = "pointer";
                 gamebg.on("click", function() {
-                    This.startGame();
+                    This.startGame(This.initTime);
+                })
+            }
+
+            if (img.item.id == "myhome") {
+                gamebg.x = (this.stage.width - result.width) / 2 + 70;
+                gamebg.y = this.stage.height - 105;
+
+                gamebg.scaleX = gamebg.scaleY = 0.9;
+
+                gamebg.cursor = "pointer";
+                gamebg.on("click", function() {
+                    This.goHome();
+                })
+            }
+
+            if (img.item.id == "qzone") {
+                gamebg.x = (this.stage.width - result.width) / 2 - 70;
+                gamebg.y = this.stage.height - 80;
+
+                gamebg.scaleX = gamebg.scaleY = 0.9;
+
+                gamebg.cursor = "pointer";
+                gamebg.on("click", function() {
+                    $.shareSNS();
                 })
                 //gamebg.onclick = this.startGame();
             }
 
             this.stage.addChild(gamebg);
             this.stage.update();
+        },
+
+        /**
+         * 显示个人主页
+         * @return {[type]} [description]
+         */
+        goHome:function() {
+            //获取最新的个人数据
+            $.ajaxGet(Util.API_HOST, {"mod": "getrecord"}, function(respons) {
+                //更新前端记录
+                $("#myrecord").html("历史最高：" + $.formatNumber(respons.recordScore));
+                $("#mynum").html("本周最高：" + $.formatNumber(respons.weekScore));
+
+                $("#myItem").fadeIn();
+            });
+            
         },
 
         /**
@@ -852,6 +970,73 @@ $(function() {
         },
 
         /**
+         * 时间到
+         * @return {[type]}
+         */
+        timeUP: function(This) {
+            if (This.timer) {
+                clearInterval(This.timer);
+            }
+            //显示结束动画
+            // this.addMask();
+
+            setTimeout(function() {
+                $("#scorenum").css({
+                    "fontSize": "24px",
+                    "bottom": "205px"
+                })
+                $(".recordC,.weekC,#subnum").hide();
+
+                //前端操作
+                $("#scorenum").html($.formatNumber(This.score.currentScore));
+                $("#subnum").html("历史最高：" + $.formatNumber(This.score.recordScore));
+
+                //更新记录
+                This.score.record(This.score.currentScore, This);
+                if (This.score.currentScore > This.score.weekScore) {
+                    
+                    if (This.score.currentScore > This.score.recordScore) {
+                        $("#scorenum").css({
+                            "fontSize": "30px",
+                            "bottom": "194px"
+                        });
+                        $(".recordC").show();
+                    } else {
+                        $("#subnum").show();
+                        $(".weekC").show();
+                    }
+                } else {
+                    $("#subnum").show();
+                }
+
+                $("#scoreItem").fadeIn();
+
+                $("body").delegate(".return", "click", function() {
+                    //$("#scoreItem").fadeOut();
+                    This.score.resetScore();
+                    $.shareSNS();
+                });
+            }, 1500);
+        },
+
+        /**
+         * 设置模糊遮罩
+         */
+        // addMask:function() {
+        //     var dataURL = this.canvas.toDataURL();
+        //     var img = new Image();
+        //     img.src = dataURL;
+
+        //     var blur = new createjs.Bitmap(img);
+        //     blur.filters = [new createjs.BlurFilter(10, 10, 1)];
+        //     blur.cache(0, 0, this.stage.width, this.stage.height);
+        //     blur.alpha = 0.9;
+
+        //     this.stage.addChild(blur);
+        //     //updateCacheImage(false);
+        // },
+
+        /**
          * 设置舞台tick
          * @param {[type]} duration [description]
          */
@@ -861,10 +1046,10 @@ $(function() {
                 duration = 20;
             }
 
-            //createjs.Ticker.removeInterval();
+            //createjs.Ticker.reset();
             createjs.Ticker.removeEventListener('tick');
 
-            createjs.Ticker.setInterval(duration);
+            // createjs.Ticker.setInterval(duration);
             createjs.Ticker.setFPS(52);
 
             createjs.Ticker.addEventListener('tick', function() {

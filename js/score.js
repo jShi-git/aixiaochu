@@ -36,6 +36,14 @@ $(function() {
         },
 
         /**
+         * 游戏单局session
+         * @return {[type]} [description]
+         */
+        getSession:function() {
+
+        },
+
+        /**
          * 获取排行榜
          * @return {[type]} [description]
          */
@@ -71,6 +79,13 @@ $(function() {
             });
         },
 
+        /**
+         * 生成排行榜的html代码
+         * @param  {[type]} type  [description]
+         * @param  {[type]} index [description]
+         * @param  {[type]} items [description]
+         * @return {[type]}       [description]
+         */
         getTopItem: function(type, index, items) {
             var tpls = {
                 'horno': '<li class="horno"><div class="num<%=num%> ico"></div><img src="<%=avatar%>" width="35" onerror="this.src=\''+Util.NO_AVATAR+'\'" /><span><%=username%>:<%=record%></span></li>',
@@ -95,10 +110,20 @@ $(function() {
         },
 
         /**
+         * 积分重置
+         * @return {[type]} [description]
+         */
+        resetScore:function() {
+            this.currentScore = 0;
+            this.track.text = this.currentScore;
+        },
+
+        /**
          * 获取/更新记录
          * @return {[type]} [description]
          */
-        record: function(score) {
+        record: function(score, obj) {
+            var This = this;
             var data = {
                 "mod": "getrecord"
             };
@@ -106,12 +131,15 @@ $(function() {
             if (score) {
                 data.func = "update";
                 data.score = score;
+                data.sess = obj.sessKey;
             }
 
             $.ajaxGet(Util.API_HOST, data, function(respons) {
                 //更新前端记录
-                this.recordScore = respons.recordScore;
-                this.weekScore = respons.weekScore;
+                This.recordScore = respons.recordScore;
+                This.weekScore = respons.weekScore;
+                obj.playCount = respons.playCount;
+                obj.sessKey = respons.sess;
             });
 
         }

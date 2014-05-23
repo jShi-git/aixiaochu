@@ -84,7 +84,7 @@
             var gameObj = gameObject;
             var This = this;
 
-            if (gameObj.dropCount == 0 && gameObj.timeBtn && (Math.abs(This.startX - evt.stageX) > 10 || Math.abs(This.startY - evt.stageY) > 10)) {
+            if (gameObj.timeCount > 0 && gameObj.dropCount == 0 && gameObj.timeBtn && (Math.abs(This.startX - evt.stageX) > 10 || Math.abs(This.startY - evt.stageY) > 10)) {
                 gameObj.loadSound("slide");
                 gameObj.timeBtn = false;
 
@@ -123,6 +123,7 @@
         //handlers
         function handleTick(e) {
             var item = e.currentTarget;
+
             //消除动画
             if (item.disapear) {
                 gameObject.score.update(sq.pointValue);
@@ -184,20 +185,35 @@
 
             } else {
                 //判断是否要下落
-                var thisY = item.h * (item.row) + item.sx;
-                if (Math.ceil(item.y) != thisY) {
-                    TweenMax.to(item, 0.4, {
-                        y: Math.abs(thisY),
-                        onComplete: function() {
-                            // gameObject.log(item.row + "   " + item.col);
-                            gameObject.frameArr[item.row][item.col] = item;
-                            gameObject.dropCount--;
-                        },
-                        onReverseComplete: function() {}
-                    });
+                if(gameObject.timeCount > 0) {
+                    var thisY = item.h * (item.row) + item.sx;
+                    if (Math.ceil(item.y) != thisY) {
+                        TweenMax.to(item, 0.4, {
+                            y: Math.abs(thisY),
+                            onComplete: function() {
+                                // gameObject.log(item.row + "   " + item.col);
+                                gameObject.frameArr[item.row][item.col] = item;
+                                gameObject.dropCount--;
+                            },
+                            onReverseComplete: function() {}
+                        });
+                    } else {
+                        item.y = Math.ceil(item.y);
+                    }
                 } else {
-                    item.y = Math.ceil(item.y);
+                    var resetY = -((gameObject.rowNum - item.row) * item.h + 32);
+                    if (Math.ceil(item.y) != resetY) {
+                        TweenMax.to(item, 2.5, {
+                            y: resetY,
+                            onComplete: function() {
+                            },
+                            onReverseComplete: function() {}
+                        });
+                    } else {
+                        item.y = Math.ceil(item.y);
+                    }
                 }
+                
             }
         }
 

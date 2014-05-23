@@ -9,8 +9,8 @@
     <title>爱消除</title>
     <style>
     * { margin: 0; padding: 0; }
-    html, body { height: 100%; width: 100%; overflow-y:hidden;}
     canvas { display: block; margin:0px auto;}
+    html, body { height: 100%; width: 100%; overflow-y:hidden;}
     body{background: #252833;}
     .bang{position: absolute; top:40px; left:50%; width: 275px; margin-left: -134px; overflow: hidden; display:none; z-index: 1002;}
     .bang .ico{background-image: url(image/default/bang.png);background-repeat: no-repeat;}
@@ -36,7 +36,28 @@
     li div.num4.ico{background-position: -112px 0px;}
     li div.num5.ico{background-position: 0px -30px;}
     li div.num6.ico{background-position: -28px -30px;}
-    #model{position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: black; z-index: 1001;opacity: 0.3;display: none;}
+
+    /*结束页面*/
+    #scoreItem, #myItem{background: url(image/default/score.png); background-size:100% 100%;background-repeat: no-repeat; width: 320px; height: 480px; position: absolute; left:50%; margin-left: -160px; top:0px; overflow: hidden; display: none; z-index: 1003}
+    #scoreItem div{position: absolute;font-family:"微软雅黑"; font-weight:bold;color:#e34e65; text-align: center;}
+    .scorenum{left:125px; bottom:205px; font-size:24px;text-shadow: 1px 1px 3px #333;}
+    .subnum{left:120px; bottom:188px; font-size:12px;}
+    .recordC{background: url(image/default/circle.png); background-size:100%;background-repeat: no-repeat; width:70px; height: 70px; right:40px; bottom:220px; display: none;}
+    .weekC{background: url(image/default/circle.png); background-position: 0px -70px; background-size:100%;background-repeat: no-repeat; width:70px; height: 70px; right:40px; bottom:220px; display: none;}
+    .return, #myItem .myreturn{width: 130px; height: 40px; bottom:64px; cursor: pointer; left: 50%; margin-left: -65px;}
+	
+	#myItem{background: url(image/default/my.png); background-size:100% 100%; display:none;}
+	#myItem div{font-family:"微软雅黑"; font-weight:bold;}
+	#myItem .myreturn{position: absolute; bottom:90px;}
+	#myrecord{color:#fff; font-size:28px; text-align: center; margin-top:130px;}
+	#mynum{color:#e48937; font-size:24px; text-align: center; margin-top: 85px; text-shadow: none;}
+	
+
+    #model{position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: black; z-index: 1001;opacity: 0.3; display: none;}
+    #over{opacity: 1; background: transparent; display: none;}
+    #over img{position: absolute; left: 50%; margin-left: -660px; zoom:0.2; top:10px;}
+    #timeBar{width:320px; margin:45px auto 0px; overflow: hidden; position: absolute; height: 6px; left: 50%; margin-left: -160px; display: none;}
+    #timeBar span{width: 100%;height: 1px;margin: 2px auto;background: #2187E7;position: absolute;box-shadow: 0px 0px 10px 1px rgba(0, 198, 255, 0.7);}
     </style>
     <script src="js/jquery.js"></script>
     <script src="js/util.js"></script>
@@ -49,6 +70,7 @@
 </head>
 <body>
     <div class="view">
+        <div id="timeBar"><span></span></div>
         <canvas id="demoCanvas" width="320" height="480">您的浏览器不支持canvas</canvas>
     </div>
 
@@ -64,6 +86,24 @@
         <div class="bb"></div>
     </div>
 
+    <!--结束界面-->
+    <div id="scoreItem">
+        <div class="scorenum" id="scorenum">0</div>
+        <div class="subnum" id="subnum">历史最高：0</div>
+        <div class="recordC"></div>
+        <div class="weekC"></div>
+        <div class="return"></div>
+    </div>
+
+    <!--个人主页-->
+    <div id="myItem">
+    	<div class="subnum" id="myrecord">历史最高：30,000</div>
+        <div class="scorenum" id="mynum">本周最高：5,000</div>
+        <div class="myreturn" onclick="$('#myItem').fadeOut();"></div>
+    </div>
+    
+    <!--时间条提示-->
+    <div id="over"><img src="image/default/over.png"/></div>
     <div id="model"></div>
 
     <script>
