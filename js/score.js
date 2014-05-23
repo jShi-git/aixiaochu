@@ -123,6 +123,9 @@ $(function() {
          * @return {[type]} [description]
          */
         record: function(score, obj) {
+
+			//测试，直接返回
+			return false;
             var This = this;
             var data = {
                 "mod": "getrecord"
