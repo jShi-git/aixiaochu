@@ -5,10 +5,24 @@ Author:<a href="_blank" href="http://www.shizuwu.cn/">http://www.shizuwu.cn/</a>
 
 Demo:<a href="_blank" href="http://jshi-git.github.io/game/aixiaochu/index.html">http://jshi-git.github.io/game/aixiaochu/index.html</a>
 
+##游戏说明
+
 游戏界面模仿微信游戏天天系列中的——天天爱消除
 
 界面素材和声音素材来源于网上
 
+##声明
+开源代码中有一些坑，之后在实际项目中修复了，由于某些原因不方便完全开源，有需要此方面需求的“猿”可以直接联系我
+```
+QQ：306309883
+```
+
+##正式版预览效果
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/1.png"/>
+
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/2.png"/>
+
+##游戏预览(开源版)
 <img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/loading.png"/>
 
 <img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/游戏中.png"/>
