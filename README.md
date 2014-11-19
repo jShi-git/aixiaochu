@@ -18,9 +18,9 @@ QQ：306309883
 ```
 
 ##正式版预览效果
-<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/1.png"/>
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/1.jpg"/>
 
-<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/2.png"/>
+<img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/2.jpg"/>
 
 ##游戏预览(开源版)
 <img src="https://raw.githubusercontent.com/jShi-git/aixiaochu/master/screenshot/loading.png"/>
