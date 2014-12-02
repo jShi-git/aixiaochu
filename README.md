@@ -1,11 +1,11 @@
 爱消除html5版
 =======================
 
-Author:<a href="_blank" href="http://www.shizuwu.cn/">http://www.shizuwu.cn/</a>
+Author:<a target="_blank" href="http://www.shizuwu.cn/">http://www.shizuwu.cn/</a>
 
-Demo:<a href="_blank" href="http://jshi-git.github.io/game/aixiaochu/index.html">http://jshi-git.github.io/game/aixiaochu/index.html</a>
+Demo:<a target="_blank" href="http://jshi-git.github.io/game/aixiaochu/index.html">http://jshi-git.github.io/game/aixiaochu/index.html</a>
 
-合作：<a href="_blank" href="https://github.com/jShi-git/weixin">点我 >> 微信活动页开发 &&　html5开发 && web app开发</a>
+合作:<a target="_blank" href="https://github.com/jShi-git/weixin">https://github.com/jShi-git/weixin</a>
 
 ##游戏说明
 
