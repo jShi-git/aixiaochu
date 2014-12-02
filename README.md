@@ -5,6 +5,8 @@ Author:<a href="_blank" href="http://www.shizuwu.cn/">http://www.shizuwu.cn/</a>
 
 Demo:<a href="_blank" href="http://jshi-git.github.io/game/aixiaochu/index.html">http://jshi-git.github.io/game/aixiaochu/index.html</a>
 
+合作：<a href="_blank" href="https://github.com/jShi-git/weixin">点我：微信活动页开发 &&　html5开发 && web app开发</a>
+
 ##游戏说明
 
 游戏界面模仿微信游戏天天系列中的——天天爱消除
