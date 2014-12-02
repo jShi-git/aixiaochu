@@ -11,6 +11,14 @@ Demo:<a href="_blank" href="http://jshi-git.github.io/game/aixiaochu/index.html"
 
 界面素材和声音素材来源于网上
 
+##源代码说明
+```
+下了代码不能运行的朋友请先看这里：
+ + 1、游戏需要在支持html5的浏览器中运行
+ + 2、游戏需要在web服务器环境下运行(IIS、apache、nginx等)
+ + 3、本地测试请将game.js中的debug参数置为true
+```
+
 ##声明
 开源代码中有一些坑，之后在实际项目中修复了，由于某些原因不方便完全开源，有需要此方面需求的“猿”可以直接联系我
 ```
