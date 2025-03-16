@@ -34,7 +34,7 @@ $(function() {
         check: false,
         loading: null,
         loadAni: null,
-        initTime: 10,
+        initTime: 60,
         timeCount: 10,
         timer: null,
         playCount:0, //剩余游戏次数
